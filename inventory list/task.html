@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0; 
+        }
+    
+        h1 {
+            color: #333; 
+        }
+    
+        #inventoryForm {
+            background-color: #fff; 
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc; 
+            border-radius: 5px;
+        }
+    
+        button {
+            background-color: #007BFF; 
+            color: #fff; 
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #0056b3; 
+        }
+    
+        #output {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1>Inventory List</h1>
+    <form id="inventoryForm">
+        <label for="operation">Operation:</label>
+        <select id="operation">
+            <option value="add">Add</option>
+            <option value="remove">Remove</option>
+            <option value="getList">Get List</option>
+        </select>
+        <input type="text" id="itemName" placeholder="Item Name" required>
+        <button type="button" onclick="performOperation()">Submit</button>
+    </form>
+
+    <div id="output">
+        <!-- Output will be displayed here -->
+    </div>
+
+    <script>
+        function inventoryList() {
+            const collection = [];
+
+            function add(name) {
+                if (!collection.includes(name)) {
+                    collection.push(name);
+                }
+            }
+
+            function remove(name) {
+                const index = collection.indexOf(name);
+                if (index !== -1) {
+                    collection.splice(index, 1);
+                }
+            }
+
+            function getList() {
+                return collection;
+            }
+
+            return {
+                add,
+                remove,
+                getList,
+            };
+        }
+
+        const inventory = inventoryList();
+
+        function performOperation() {
+            const operation = document.getElementById("operation").value;
+            const itemName = document.getElementById("itemName").value;
+            const output = document.getElementById("output");
+
+            if (operation === "add") {
+                inventory.add(itemName);
+                output.textContent = `Item '${itemName}' added.`;
+            } else if (operation === "remove") {
+                inventory.remove(itemName);
+                output.textContent = `Item '${itemName}' removed.`;
+            } else if (operation === "getList") {
+                const list = inventory.getList();
+                if (list.length > 0) {
+                    output.textContent = list.join(',');
+                } else {
+                    output.textContent = 'No Items';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

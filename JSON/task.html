@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var request = new XMLHttpRequest();
+    var url = "https://fakestoreapi.com/products/";
+
+    request.open("GET", url, true);
+    request.onreadystatechange = function () {
+    if (request.readyState === 4) { 
+    if (request.status === 200) { 
+      var data = JSON.parse(request.responseText);
+      data.forEach(function (product) {
+        var productID = product.id;
+        var productTitle = product.title;
+        var productPrice = product.price;
+        var productCategory = product.category;
+
+        document.write("Product ID: " + productID);
+        document.write("Product Title: " + productTitle);
+        document.write("Product Price: $" + productPrice);
+        document.write("Product Category: " + productCategory);
+        document.write("\n");
+      });
+    } else {
+      alert("Failed to retrieve data. Status code: " + request.status);
+    }
+  }
+};
+request.send();
+
+    </script>
+</body>
+</html>

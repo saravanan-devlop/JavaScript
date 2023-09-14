@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+    
+        form {
+            background-color: #fff;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        h1 {
+            text-align: center;
+        }
+    
+        label {
+            font-weight: bold;
+        }
+    
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        input[type="number"]:disabled,
+        input[type="text"]:disabled {
+            background-color: #f2f2f2;
+        }
+    
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- html code -->
+
+        <body>
+            <form>
+                <h1>Employee Payroll</h1>
+                <label>Enter Employee number:</label>
+                <input type="number" placeholder="Enter Employee number" id="eno"><br>
+        
+                <label>Enter Employee name:</label>
+                <input type="text" placeholder="Enter Employee name" id="ename"><br>
+        
+                <label>Enter Designation:</label>
+                <input type="text" placeholder="Enter Designation" id="des"><br>
+        
+                <label>Enter Basic Pay:</label>
+                <input type="number" placeholder="Enter Basic pay" id="bp" onkeyup="calc()"><br>
+        
+                <label>HRA:</label>
+                <input type="number" id="hra" disabled><br>
+        
+                <label>DA:</label>
+                <input type="number" id="da" disabled><br>
+        
+                <label>PF:</label>
+                <input type="number" id="pf" disabled><br>
+        
+                <label>Gross Pay:</label>
+                <input type="number" id="gp" disabled><br>
+        
+                <label>Net Pay:</label>
+                <input type="number" id="np" disabled><br>
+        
+                <button type="button" onclick="validate()">Submit</button>
+                <button type="button" onclick="validate1()">Reset</button>
+            </form>
+            <div>
+                <p id="show"></p>
+            </div>
+        
+            <!--js code -->
+        
+            <script>
+                function calc() {
+                    var bp1 = parseInt(document.getElementById('bp').value);
+                    var hra1 = document.getElementById('hra').value;
+                    var da1 = document.getElementById('da').value;
+                    var pf1 = document.getElementById('pf').value;
+        
+                    hra1 = bp1 * 12 / 100;
+                    da1 = bp1 * 13 / 100;
+                    pf1 = bp1 * 15 / 100;
+        
+                    var gp1 = bp1 + hra1 + da1;
+                    var np1 = gp1 - pf1;
+        
+                    document.getElementById('hra').value = hra1;
+                    document.getElementById('da').value = da1;
+                    document.getElementById('pf').value = pf1;
+                    document.getElementById('gp').value = gp1;
+                    document.getElementById('np').value = np1;
+                }
+                function validate(){
+                    var en1 = document.getElementById('eno').value;
+                    var ename = document.getElementById('ename').value;
+                    var des1 = document.getElementById('des').value;
+                    var bp1 = document.getElementById('bp').value;
+        
+                    if(en1 !== "" && ename !== "" && des1 !== "" && bp1 !== "") {
+                        // Create a new page with the input values
+                        var newPage = window.open("", "_blank");
+                        var content = `
+                            <h1>Employee Information</h1>
+                            <p><strong>Employee Number:</strong> ${en1}</p>
+                            <p><strong>Employee Name:</strong> ${ename}</p>
+                            <p><strong>Designation:</strong> ${des1}</p>
+                            <p><strong>Basic Pay:</strong> ${bp1}</p>
+                            <p><strong>HRA:</strong> ${document.getElementById('hra').value}</p>
+                            <p><strong>DA:</strong> ${document.getElementById('da').value}</p>
+                            <p><strong>PF:</strong> ${document.getElementById('pf').value}</p>
+                            <p><strong>Gross Pay:</strong> ${document.getElementById('gp').value}</p>
+                            <p><strong>Net Pay:</strong> ${document.getElementById('np').value}</p>
+                        `;
+                        newPage.document.write(content);
+                        newPage.document.close();
+                    }
+                    else {
+                        alert("Please enter all the details");
+                    }
+                }
+                function validate1(){
+                    document.getElementById('eno').value = "";
+                    document.getElementById('ename').value = "";
+                    document.getElementById('des').value = "";
+                    document.getElementById('bp').value = "";
+                    document.getElementById('hra').value = "";
+                    document.getElementById('da').value = "";
+                    document.getElementById('pf').value = "";
+                    document.getElementById('gp').value = "";
+                    document.getElementById('np').value = "";
+                }
+            </script>
+        </body>
+        </html>
+        
+    </script>
+</body>
+</html>
